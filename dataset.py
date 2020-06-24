@@ -33,14 +33,14 @@ class VOCDataset(data.Dataset):
         for i, color in enumerate(self.voc_colors):
             self.color2class[int(color[0] / 32)][int(color[1] / 32)][int(color[2] / 32)] = i
         if train:
-            self.imgs = np.loadtxt('./VOC2012/ImageSets/Segmentation/train.txt', dtype=str)
+            self.imgs = np.loadtxt(path+'ImageSets/Segmentation/train.txt', dtype=str)
         else:
-            self.imgs = np.loadtxt('./VOC2012/ImageSets/Segmentation/val.txt', dtype=str)
+            self.imgs = np.loadtxt(path+'ImageSets/Segmentation/val.txt', dtype=str)
 
     def __getitem__(self, index):
         img_name = self.imgs[index]
-        origin_img = Image.open('./VOC2012/JPEGImages/' + str(img_name) + '.jpg').convert('RGB')
-        label_img = Image.open('./VOC2012/SegmentationClass/' + str(img_name) + '.png').convert('RGB')
+        origin_img = Image.open(path+'JPEGImages/' + str(img_name) + '.jpg').convert('RGB')
+        label_img = Image.open(path+'SegmentationClass/' + str(img_name) + '.png').convert('RGB')
 
         if self.transform is not None:
             origin_img = self.transform(origin_img)
